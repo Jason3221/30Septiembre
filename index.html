@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para ti ❤️</title>
+
+  <!-- Fuentes: Poppins (títulos) e Indie Flower (letra a mano del final) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/src/css/style.css">
+</head>
+<body>
+
+  <!-- Fondo 3D fijo (planeta, anillos, estrellas, carros) → scene3d.js -->
+  <canvas id="scene3d"></canvas>
+
+  <!-- Pantalla de entrada: al tocarla empieza todo y la música suena a los 2 s → music.js -->
+  <div id="start-screen" class="start-screen">
+    <div class="start-box">
+      <div class="start-heart">💝</div>
+      <p class="start-small">Tengo una sorpresa para ti</p>
+      <button id="start-btn" class="start-btn">Toca para abrir</button>
+    </div>
+  </div>
+
+  <!-- Indicador de scroll -->
+  <div class="scroll-hint">
+    <span>Desliza</span>
+    <span class="scroll-arrow">↓</span>
+  </div>
+
+  <main>
+
+    <!-- ===== ESCENA 1: INTRO ===== -->
+    <section id="intro" class="scene intro">
+      <div class="intro-text">
+        <p class="intro-small">Hay algo que quiero decirte</p>
+        <h1 class="intro-big">Para ti ❤️</h1>
+      </div>
+    </section>
+
+    <!-- ===== ESCENA 2: CARROS (se queda fija mientras haces scroll) ===== -->
+    <section id="momentos" class="scene momentos">
+      <div class="sticky">
+        <p class="moment moment-1"><span>Cada momento</span><strong>cuenta</strong></p>
+        <p class="moment moment-2"><span>Y por eso...</span><strong>hice esto para ti</strong></p>
+        <p class="moment moment-3"><span>cada recuerdo</span><strong>permanece</strong></p>
+      </div>
+    </section>
+
+    <!-- ===== ESCENA 3: MENSAJE ===== -->
+    <section id="mensaje" class="scene mensaje">
+      <div class="mensaje-box">
+        <p class="label">Un pequeño mensaje</p>
+        <h2>Gracias por estar<br>en mi vida ❤️</h2>
+        <p class="mensaje-sub">Espero que cada vez que recuerdes este momento, sonrías.</p>
+      </div>
+    </section>
+
+    <!-- ===== ESCENA 4: "MEMORIA REVELÁNDOSE" (se queda fija mientras haces scroll) ===== -->
+    <section id="fotos" class="recuerdos">
+      <div class="recuerdos-sticky">
+
+        <!-- Lluvia de corazones (neón + hacia la pantalla) → hearts.js -->
+        <canvas id="rec-hearts" class="rec-hearts" aria-hidden="true"></canvas>
+
+        <!-- Nube romántica: corazones y destellos pequeños que suben y se van -->
+        <div class="rec-ambient" aria-hidden="true">
+          <span class="m-heart" style="--x:18%;--y:62%;--s:14px" data-o="0.9" data-drift="-18"></span>
+          <span class="m-heart" style="--x:32%;--y:74%;--s:9px"  data-o="0.6" data-drift="12"></span>
+          <span class="m-heart" style="--x:47%;--y:66%;--s:18px" data-o="1"   data-drift="-8"></span>
+          <span class="m-heart" style="--x:61%;--y:78%;--s:11px" data-o="0.7" data-drift="16"></span>
+          <span class="m-heart" style="--x:74%;--y:60%;--s:15px" data-o="0.85" data-drift="-14"></span>
+          <span class="m-heart" style="--x:84%;--y:72%;--s:8px"  data-o="0.5" data-drift="10"></span>
+          <span class="m-heart" style="--x:25%;--y:84%;--s:10px" data-o="0.6" data-drift="8"></span>
+          <span class="m-heart" style="--x:68%;--y:88%;--s:12px" data-o="0.7" data-drift="-10"></span>
+          <span class="m-spark" style="--x:38%;--y:58%;--s:10px" data-o="0.9" data-drift="6"></span>
+          <span class="m-spark" style="--x:56%;--y:82%;--s:7px"  data-o="0.7" data-drift="-6"></span>
+          <span class="m-spark" style="--x:80%;--y:64%;--s:9px"  data-o="0.8" data-drift="4"></span>
+        </div>
+
+        <!-- Título -->
+        <h2 class="rec-title">Nuestros recuerdos</h2>
+
+        <!-- Escenario de la foto -->
+        <div class="rec-stage">
+          <!-- Destello central -->
+          <div class="rec-flash" aria-hidden="true"></div>
+
+          <!-- Heart burst: salen desde detrás de la foto (data-x/y = hacia dónde van) -->
+          <div class="rec-burst" aria-hidden="true">
+            <span class="m-heart" data-x="-230" data-y="-190" data-r="-25" data-s="1.1"></span>
+            <span class="m-heart" data-x="240"  data-y="-170" data-r="20"  data-s="0.9"></span>
+            <span class="m-heart" data-x="-270" data-y="20"   data-r="-10" data-s="0.8"></span>
+            <span class="m-heart" data-x="265"  data-y="60"   data-r="15"  data-s="1"></span>
+            <span class="m-heart" data-x="-200" data-y="230"  data-r="-30" data-s="0.75"></span>
+            <span class="m-heart" data-x="210"  data-y="240"  data-r="25"  data-s="0.85"></span>
+            <span class="m-heart" data-x="20"   data-y="-270" data-r="5"   data-s="1.25"></span>
+          </div>
+
+          <!-- La fotografía (photos.js pone aquí la primera foto) -->
+          <div class="rec-photo">
+            <div class="rec-float">
+              <figure class="rec-card">
+                <img id="memory-img" alt="Nuestro recuerdo">
+                <figcaption id="memory-cap">Nuestro recuerdo</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <!-- Destellos alrededor de la foto -->
+          <span class="rec-sparkle s1" aria-hidden="true"><i></i></span>
+          <span class="rec-sparkle s2" aria-hidden="true"><i></i></span>
+          <span class="rec-sparkle s3" aria-hidden="true"><i></i></span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Más fotos (solo aparece si pones más de una foto en src/assets/images/) -->
+    <section id="mas-fotos" class="scene fotos">
+      <div id="photo-grid" class="photo-grid"></div>
+    </section>
+
+    <!-- ===== ESCENA FINAL: AGUJERO NEGRO EN 3D → finale.js + note.js ===== -->
+    <section id="final" class="final-scene">
+      <div class="final-sticky">
+        <h2 class="final-title">Feliz 30 de septiembre 🚗</h2>
+
+        <!-- Ayuda (aparece cuando ya se puede mover) -->
+        <p class="final-hint">Arrastra para girar · Pellizca o usa la rueda para alejar</p>
+
+        <!-- Botón para volver arriba -->
+        <button id="top-btn" class="top-btn" aria-label="Volver al inicio">↑</button>
+
+        <!-- Botón que abre la tarjeta -->
+        <button id="note-btn" class="note-btn pulse" aria-label="Abrir mensaje">💬</button>
+      </div>
+
+      <!-- Tarjeta con el mensaje (cambia el texto aquí) -->
+      <div id="note-modal" class="note-modal" hidden>
+        <div class="note-card">
+          <button id="note-close" class="note-close" aria-label="Cerrar">×</button>
+          <h3>Para ti 💙</h3>
+          <p>Dicen que la vida es un camino largo, pero contigo cada kilómetro vale la pena</p>
+          <p>No importa si vamos rápido o despacio, si hay curvas o baches: lo que importa es que vamos juntos.</p>
+          <p>Gracias por ser mi copiloto favorita. Contigo quiero seguir acelerando hacia todo lo que viene.</p>
+          <p class="note-big">Siempre contigo ❤️</p>
+          <p class="note-sign">Amanda</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>
